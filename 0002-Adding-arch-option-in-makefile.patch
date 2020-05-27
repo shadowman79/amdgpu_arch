@@ -1,0 +1,40 @@
+From 29ee55300193850c871125613d951471fe046408 Mon Sep 17 00:00:00 2001
+From: Filipp Marulin <alifeisfine@gmail.com>
+Date: Sat, 2 Mar 2019 10:44:01 +0300
+Subject: [PATCH] Adding arch option in makefile
+
+---
+ Makefile | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 5ef8298..ae00dd0 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,3 +1,5 @@
++kdir    := /lib/modules/$(shell uname -r)/build
++
+ RHEL_MAJOR = $(shell sed -n 's/^RHEL_MAJOR = \(.*\)/\1/p' $(kdir)/Makefile)
+ RHEL_MINOR = $(shell sed -n 's/^RHEL_MINOR = \(.*\)/\1/p' $(kdir)/Makefile)
+ 
+@@ -17,7 +19,7 @@ OS_NAME = "rhel"
+ OS_VERSION = "$(shell sed -n -e 's/[^0-9]*\([0-9]*.[0-9]*\).*/\1/p' /etc/centos-release-upstream)"
+ endif
+ 
+-ifneq ($(findstring $(OS_NAME), "ubuntu" "sled" "sles" "opensuse" "opensuse-leap" "amzn"),)
++ifneq ($(findstring $(OS_NAME), "ubuntu" "sled" "sles" "opensuse" "opensuse-leap" "amzn" "arch"),)
+ DRM_VER=$(shell sed -n 's/^VERSION = \(.*\)/\1/p' $(kdir)/Makefile)
+ DRM_PATCH=$(shell sed -n 's/^PATCHLEVEL = \(.*\)/\1/p' $(kdir)/Makefile)
+ else ifeq ("rhel",$(OS_NAME))
+@@ -44,6 +46,8 @@ else ifeq ("sles",$(OS_NAME))
+ subdir-ccflags-y += -DOS_NAME_SLE
+ else ifeq ("amzn",$(OS_NAME))
+ subdir-ccflags-y += -DOS_NAME_AMZ
++else ifeq ("arch",$(OS_NAME))
++subdir-ccflags-y += -DOS_NAME_ARCH
+ else
+ subdir-ccflags-y += -DOS_NAME_UNKNOWN
+ endif
+-- 
+2.21.0
+
