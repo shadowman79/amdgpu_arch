@@ -4,7 +4,7 @@
 
 pkgbase=amdgpu-pro-installer
 pkgname=(amdgpu amdgpu-core amdgpu-dkms amdgpu-libgl amdgpu-pro amdgpu-pro-core amf-amdgpu-pro gst-omx-amdgpu lib32-amdgpu-libgl lib32-amdgpu-pro lib32-gst-omx-amdgpu lib32-libdrm-amdgpu lib32-llvm-amdgpu lib32-mesa-amdgpu lib32-opencl-amdgpu lib32-opencl-orca-amdgpu lib32-vulkan-amdgpu lib32-wayland-amdgpu lib32-wsa-amdgpu lib32-xserver-xorg-amdgpu-video-amdgpu libdrm-amdgpu llvm-amdgpu mesa-amdgpu opencl-amdgpu opencl-orca-amdgpu vulkan-amdgpu wayland-amdgpu wayland-protocols-amdgpu wsa-amdgpu xf86-video-amdgpu-pro xserver-xorg-amdgpu)
-pkgver=18.50.725072
+pkgver=18.50.756341
 pkgrel=1
 arch=('x86_64')
 url='http://www.amd.com'
@@ -13,11 +13,11 @@ makedepends=('wget')
 
 DLAGENTS='https::/usr/bin/wget --referer https://www.amd.com/ru/support/kb/release-notes/rn-rad-lin-18-50-unified -N %u'
 
-source=(https://drivers.amd.com/drivers/linux/amdgpu-pro-18.50-725072-ubuntu-18.04.tar.xz
+source=(https://drivers.amd.com/drivers/linux/amdgpu-pro-18.50-756341-ubuntu-18.04.tar.xz
 	0001-disable-firmware-copy.patch
 	0002-Adding-arch-option-in-makefile.patch)
-sha256sums=(52a2c1f1120edb564d5af2535439e0e7d2b3815cab457374b921687f3fd9a21a
-	252d28b86ab878a90d564e1a29baf5644ea8c9e47e76bc8395928c092360cf85
+sha256sums=(bc150de697e1351d5051aaaabf652a039600ffafeec241e428e2ce252ad0175e
+	0216c86339becc816839de7aad93febb45ed7fde36c6014942c4310b93bb7742
 	d14285e05e3c98eece1fb75a7a255431d351415f9b256174e48fc10a883181a9)
 
 
@@ -58,8 +58,8 @@ package_amdgpu () {
 	arch=('x86_64')
 	depends=()
 
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./amdgpu-lib_18.50-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./amdgpu-lib32_18.50-725072_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./amdgpu-lib_18.50-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./amdgpu-lib32_18.50-756341_amd64.deb
 
 	move_libdir "${pkgdir}/lib"
 
@@ -72,7 +72,7 @@ package_amdgpu-core () {
 	arch=('any')
 	depends=('amdgpu-dkms' )
 
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./amdgpu-core_18.50-725072_all.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./amdgpu-core_18.50-756341_all.deb
 
 	move_libdir "${pkgdir}/lib"
 
@@ -83,15 +83,15 @@ package_amdgpu-dkms () {
 	pkgdesc="The AMDGPU Pro kernel module"
 	arch=('any')
 	provides=('amdgpu=18.50')
-	depends=('amdgpu-core=18.50.725072-1' 'dkms>=1.95')
+	depends=('amdgpu-core=18.50.756341-1' 'dkms>=1.95')
 
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./amdgpu-dkms_18.50-725072_all.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./amdgpu-dkms_18.50-756341_all.deb
 
 	move_libdir "${pkgdir}/lib"
 
 	# extra_commands:
 	msg 'Applying patches...'
-	(cd ${pkgdir}/usr/src/amdgpu-18.50-725072;
+	(cd ${pkgdir}/usr/src/amdgpu-18.50-756341;
 		sed -i 's/\/extra/\/extramodules/' dkms.conf
 			msg2 '0001-disable-firmware-copy.patch'
 		patch -p1 -i "${srcdir}/0001-disable-firmware-copy.patch";
@@ -106,15 +106,15 @@ package_amdgpu-libgl () {
 	arch=('x86_64')
 	provides=('libgl' 'libegl' 'libgles')
 	conflicts=('libgl' 'libegl' 'libgles' 'libglvnd')
-	depends=('amdgpu-pro-core=18.50.725072-1' 'libdrm-amdgpu=18.50.725072-1' 'libx11' 'libx11>=1.4.99.1' 'libxcb' 'libxcb>=1.8' 'libxcb>=1.9.2' 'libxdamage>=1.1' 'libxext' 'libxfixes' 'libxshmfence' 'libxxf86vm' 'wayland-amdgpu=18.50.725072-1')
+	depends=('amdgpu-pro-core=18.50.756341-1' 'libdrm-amdgpu=18.50.756341-1' 'libx11' 'libx11>=1.4.99.1' 'libxcb' 'libxcb>=1.8' 'libxcb>=1.9.2' 'libxdamage>=1.1' 'libxext' 'libxfixes' 'libxshmfence' 'libxxf86vm' 'wayland-amdgpu=18.50.756341-1')
 
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libegl1-amdgpu-pro_18.50-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libgl1-amdgpu-pro-appprofiles_18.50-725072_all.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libgl1-amdgpu-pro-dri_18.50-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libgl1-amdgpu-pro-ext_18.50-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libgl1-amdgpu-pro-glx_18.50-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libglapi1-amdgpu-pro_18.50-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libgles2-amdgpu-pro_18.50-725072_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libegl1-amdgpu-pro_18.50-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libgl1-amdgpu-pro-appprofiles_18.50-756341_all.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libgl1-amdgpu-pro-dri_18.50-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libgl1-amdgpu-pro-ext_18.50-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libgl1-amdgpu-pro-glx_18.50-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libglapi1-amdgpu-pro_18.50-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libgles2-amdgpu-pro_18.50-756341_amd64.deb
 
 	move_libdir "${pkgdir}/lib"
 
@@ -143,13 +143,13 @@ package_amdgpu-libgl () {
 package_amdgpu-pro () {
 	pkgdesc="Meta package to install amdgpu Pro components"
 	arch=('any')
-	depends=('amdgpu-core=18.50.725072-1' 'amdgpu-dkms=18.50.725072-1' 'amdgpu-libgl=18.50.725072-1' 'amdgpu=18.50.725072-1' 'lib32-amdgpu-libgl=18.50.725072-1' 'lib32-mesa-amdgpu=18.50.725072-1' 'libelf' 'mesa-amdgpu=18.50.725072-1')
+	depends=('amdgpu-core=18.50.756341-1' 'amdgpu-dkms=18.50.756341-1' 'amdgpu-libgl=18.50.756341-1' 'amdgpu=18.50.756341-1' 'lib32-amdgpu-libgl=18.50.756341-1' 'lib32-mesa-amdgpu=18.50.756341-1' 'libelf' 'mesa-amdgpu=18.50.756341-1')
 
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./amdgpu_18.50-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./amdgpu-doc_18.50-725072_all.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./amdgpu-pro_18.50-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./amdgpu-pro-lib32_18.50-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./amdgpu-pro-pin_18.50-725072_all.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./amdgpu_18.50-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./amdgpu-doc_18.50-756341_all.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./amdgpu-pro_18.50-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./amdgpu-pro-lib32_18.50-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./amdgpu-pro-pin_18.50-756341_all.deb
 
 	move_libdir "${pkgdir}/lib"
 
@@ -159,9 +159,9 @@ package_amdgpu-pro () {
 package_amdgpu-pro-core () {
 	pkgdesc="Core meta package for unified amdgpu driver."
 	arch=('any')
-	depends=('amdgpu-core=18.50.725072-1')
+	depends=('amdgpu-core=18.50.756341-1')
 
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./amdgpu-pro-core_18.50-725072_all.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./amdgpu-pro-core_18.50-756341_all.deb
 
 	move_libdir "${pkgdir}/lib"
 
@@ -171,9 +171,9 @@ package_amdgpu-pro-core () {
 package_amf-amdgpu-pro () {
 	pkgdesc="AMDGPU Pro Advanced Multimedia Framework"
 	arch=('x86_64')
-	depends=('libgl' 'libx11' 'mesa-amdgpu=18.50.725072-1' 'opencl-amdgpu=18.50.725072-1' 'vulkan-amdgpu=18.50.725072-1')
+	depends=('libgl' 'libx11' 'mesa-amdgpu=18.50.756341-1' 'opencl-amdgpu=18.50.756341-1' 'vulkan-amdgpu=18.50.756341-1')
 
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./amf-amdgpu-pro_1.4.11-725072_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./amf-amdgpu-pro_1.4.11-756341_amd64.deb
 
 	move_libdir "${pkgdir}/lib"
 
@@ -183,9 +183,9 @@ package_amf-amdgpu-pro () {
 package_gst-omx-amdgpu () {
 	pkgdesc="GStreamer OpenMAX plugins for AMDGPU Pro"
 	arch=('x86_64')
-	depends=('amdgpu-core=18.50.725072-1' 'glib2>=2.37.3' 'gst-plugins-base>=1.6.0' 'gstreamer>=1.0.0' 'libomxil-bellagio')
+	depends=('amdgpu-core=18.50.756341-1' 'glib2>=2.37.3' 'gst-plugins-base>=1.6.0' 'gstreamer>=1.0.0' 'libomxil-bellagio')
 
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./gst-omx-amdgpu_1.0.0.1-725072_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./gst-omx-amdgpu_1.0.0.1-756341_amd64.deb
 
 	move_libdir "${pkgdir}/lib"
 
@@ -200,14 +200,14 @@ package_lib32-amdgpu-libgl () {
 	arch=('x86_64')
 	provides=('lib32-libgl' 'lib32-libgles' 'lib32-libegl')
 	conflicts=('lib32-libgl' 'lib32-libgles' 'lib32-libegl' 'lib32-libglvnd')
-	depends=('amdgpu-libgl=18.50.725072-1' 'amdgpu-pro-core=18.50.725072-1' 'lib32-libx11' 'lib32-libx11>=1.4.99.1' 'lib32-libxcb' 'lib32-libxcb>=1.8' 'lib32-libxcb>=1.9.2' 'lib32-libxdamage>=1.1' 'lib32-libxext' 'lib32-libxfixes' 'lib32-libxshmfence' 'lib32-libxxf86vm' 'libdrm-amdgpu=18.50.725072-1' 'wayland-amdgpu=18.50.725072-1')
+	depends=('amdgpu-libgl=18.50.756341-1' 'amdgpu-pro-core=18.50.756341-1' 'lib32-libx11' 'lib32-libx11>=1.4.99.1' 'lib32-libxcb' 'lib32-libxcb>=1.8' 'lib32-libxcb>=1.9.2' 'lib32-libxdamage>=1.1' 'lib32-libxext' 'lib32-libxfixes' 'lib32-libxshmfence' 'lib32-libxxf86vm' 'libdrm-amdgpu=18.50.756341-1' 'wayland-amdgpu=18.50.756341-1')
 
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libegl1-amdgpu-pro_18.50-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libgl1-amdgpu-pro-dri_18.50-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libgl1-amdgpu-pro-ext_18.50-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libgl1-amdgpu-pro-glx_18.50-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libglapi1-amdgpu-pro_18.50-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libgles2-amdgpu-pro_18.50-725072_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libegl1-amdgpu-pro_18.50-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libgl1-amdgpu-pro-dri_18.50-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libgl1-amdgpu-pro-ext_18.50-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libgl1-amdgpu-pro-glx_18.50-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libglapi1-amdgpu-pro_18.50-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libgles2-amdgpu-pro_18.50-756341_i386.deb
 
 	move_libdir "${pkgdir}/lib" "usr/lib32"
 
@@ -234,11 +234,11 @@ package_lib32-amdgpu-libgl () {
 package_lib32-amdgpu-pro () {
 	pkgdesc="The AMDGPU Pro driver package 32bit"
 	arch=('x86_64')
-	depends=('amdgpu-core=18.50.725072-1' 'amdgpu-dkms=18.50.725072-1' 'amdgpu-libgl=18.50.725072-1' 'amdgpu-pro-core=18.50.725072-1' 'amdgpu-pro=18.50.725072-1' 'amdgpu=18.50.725072-1' 'gst-omx-amdgpu=18.50.725072-1' 'lib32-libdrm' 'lib32-libelf' 'libdrm-amdgpu=18.50.725072-1' 'llvm-amdgpu=18.50.725072-1' 'mesa-amdgpu=18.50.725072-1' 'wayland-amdgpu=18.50.725072-1' 'xf86-video-amdgpu-pro=18.50.725072-1' 'xserver-xorg-amdgpu=18.50.725072-1')
+	depends=('amdgpu-core=18.50.756341-1' 'amdgpu-dkms=18.50.756341-1' 'amdgpu-libgl=18.50.756341-1' 'amdgpu-pro-core=18.50.756341-1' 'amdgpu-pro=18.50.756341-1' 'amdgpu=18.50.756341-1' 'gst-omx-amdgpu=18.50.756341-1' 'lib32-libdrm' 'lib32-libelf' 'libdrm-amdgpu=18.50.756341-1' 'llvm-amdgpu=18.50.756341-1' 'mesa-amdgpu=18.50.756341-1' 'wayland-amdgpu=18.50.756341-1' 'xf86-video-amdgpu-pro=18.50.756341-1' 'xserver-xorg-amdgpu=18.50.756341-1')
 
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./amdgpu_18.50-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./amdgpu-lib_18.50-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./amdgpu-pro_18.50-725072_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./amdgpu_18.50-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./amdgpu-lib_18.50-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./amdgpu-pro_18.50-756341_i386.deb
 
 	move_libdir "${pkgdir}/lib" "usr/lib32"
 
@@ -253,9 +253,9 @@ package_lib32-amdgpu-pro () {
 package_lib32-gst-omx-amdgpu () {
 	pkgdesc="GStreamer OpenMAX plugins for AMDGPU Pro 32bit"
 	arch=('x86_64')
-	depends=('amdgpu-core=18.50.725072-1' 'lib32-glib2>=2.37.3' 'lib32-gst-plugins-base>=1.6.0' 'lib32-gstreamer>=1.0.0' 'lib32-libomxil-bellagio')
+	depends=('amdgpu-core=18.50.756341-1' 'lib32-glib2>=2.37.3' 'lib32-gst-plugins-base>=1.6.0' 'lib32-gstreamer>=1.0.0' 'lib32-libomxil-bellagio')
 
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./gst-omx-amdgpu_1.0.0.1-725072_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./gst-omx-amdgpu_1.0.0.1-756341_i386.deb
 
 	move_libdir "${pkgdir}/lib" "usr/lib32"
 
@@ -274,12 +274,12 @@ package_lib32-libdrm-amdgpu () {
 	arch=('x86_64')
 	provides=('lib32-libdrm')
 	conflicts=('lib32-libdrm')
-	depends=('amdgpu-core=18.50.725072-1' 'libdrm-amdgpu=18.50.725072-1')
+	depends=('amdgpu-core=18.50.756341-1' 'libdrm-amdgpu=18.50.756341-1')
 
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libdrm-amdgpu-amdgpu1_2.4.95-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libdrm-amdgpu-dev_2.4.95-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libdrm-amdgpu-radeon1_2.4.95-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libdrm2-amdgpu_2.4.95-725072_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libdrm-amdgpu-amdgpu1_2.4.95-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libdrm-amdgpu-dev_2.4.95-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libdrm-amdgpu-radeon1_2.4.95-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libdrm2-amdgpu_2.4.95-756341_i386.deb
 
 	move_libdir "${pkgdir}/lib" "usr/lib32"
 
@@ -309,15 +309,15 @@ package_lib32-llvm-amdgpu () {
 	arch=('x86_64')
 	provides=('lib32-llvm-libs' 'lib32-llvm')
 	conflicts=('lib32-llvm' 'lib32-llvm-libs')
-	depends=('amdgpu-core=18.50.725072-1' 'binfmt-support' 'lib32-libedit' 'lib32-libedit>=2.11-20080614' 'lib32-libffi>=3.0.9' 'lib32-ncurses' 'lib32-ncurses5-compat-libs>=6' 'lib32-zlib>=1.2.0' 'llvm-amdgpu=18.50.725072-1' 'python2')
+	depends=('amdgpu-core=18.50.756341-1' 'binfmt-support' 'lib32-libedit' 'lib32-libedit>=2.11-20080614' 'lib32-libffi>=3.0.9' 'lib32-ncurses' 'lib32-ncurses5-compat-libs>=6' 'lib32-zlib>=1.2.0' 'llvm-amdgpu=18.50.756341-1' 'python2')
 
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libllvm7.0-amdgpu_7.0-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./llvm-amdgpu_7.0-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./llvm-amdgpu-7.0_7.0-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./llvm-amdgpu-7.0-dev_7.0-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./llvm-amdgpu-7.0-runtime_7.0-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./llvm-amdgpu-dev_7.0-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./llvm-amdgpu-runtime_7.0-725072_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libllvm7.0-amdgpu_7.0-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./llvm-amdgpu_7.0-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./llvm-amdgpu-7.0_7.0-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./llvm-amdgpu-7.0-dev_7.0-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./llvm-amdgpu-7.0-runtime_7.0-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./llvm-amdgpu-dev_7.0-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./llvm-amdgpu-runtime_7.0-756341_i386.deb
 
 	move_libdir "${pkgdir}/lib" "usr/lib32"
 
@@ -345,30 +345,30 @@ package_lib32-mesa-amdgpu () {
 	arch=('x86_64')
 	provides=('lib32-mesa-libgl' 'lib32-mesa-dri' 'lib32-opengl-driver' 'osmesa' 'lib32-mesa')
 	conflicts=('lib32-mesa-dri' 'lib32-mesa-libgl')
-	depends=('amdgpu-core=18.50.725072-1' 'lib32-expat>=2.0.1' 'lib32-libomxil-bellagio' 'lib32-libva1' 'lib32-libvdpau' 'lib32-libx11' 'lib32-libx11>=1.4.99.1' 'lib32-libxcb' 'lib32-libxcb>=1.13' 'lib32-libxcb>=1.8' 'lib32-libxcb>=1.9.2' 'lib32-libxdamage' 'lib32-libxdamage>=1.1' 'lib32-libxext' 'lib32-libxfixes' 'lib32-libxshmfence' 'lib32-libxxf86vm' 'lib32-zlib>=1.1.4' 'libdrm-amdgpu=18.50.725072-1' 'libselinux>=1.32' 'llvm-amdgpu=18.50.725072-1' 'mesa-amdgpu=18.50.725072-1' 'systemd-libs' 'wayland-amdgpu=18.50.725072-1' 'xorgproto>=1.4.14' 'xorgproto>=2.6')
+	depends=('amdgpu-core=18.50.756341-1' 'lib32-expat>=2.0.1' 'lib32-libomxil-bellagio' 'lib32-libva1' 'lib32-libvdpau' 'lib32-libx11' 'lib32-libx11>=1.4.99.1' 'lib32-libxcb' 'lib32-libxcb>=1.13' 'lib32-libxcb>=1.8' 'lib32-libxcb>=1.9.2' 'lib32-libxdamage' 'lib32-libxdamage>=1.1' 'lib32-libxext' 'lib32-libxfixes' 'lib32-libxshmfence' 'lib32-libxxf86vm' 'lib32-zlib>=1.1.4' 'libdrm-amdgpu=18.50.756341-1' 'libselinux>=1.32' 'llvm-amdgpu=18.50.756341-1' 'mesa-amdgpu=18.50.756341-1' 'systemd-libs' 'wayland-amdgpu=18.50.756341-1' 'xorgproto>=1.4.14' 'xorgproto>=2.6')
 
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libegl1-amdgpu-mesa_18.2.0-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libegl1-amdgpu-mesa-drivers_18.2.0-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libgbm-amdgpu-dev_18.2.0-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libgbm1-amdgpu_18.2.0-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libgbm1-amdgpu-pro_18.50-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libgbm1-amdgpu-pro-dev_18.50-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libgl1-amdgpu-mesa-dev_18.2.0-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libgl1-amdgpu-mesa-dri_18.2.0-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libgl1-amdgpu-mesa-glx_18.2.0-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libglapi-amdgpu-mesa_18.2.0-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libgles1-amdgpu-mesa_18.2.0-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libgles1-amdgpu-mesa-dev_18.2.0-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libgles2-amdgpu-mesa_18.2.0-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libgles2-amdgpu-mesa-dev_18.2.0-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libosmesa6-amdgpu_18.2.0-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libosmesa6-amdgpu-dev_18.2.0-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libxatracker-amdgpu-dev_18.2.0-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libxatracker2-amdgpu_18.2.0-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./mesa-amdgpu-common-dev_18.2.0-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./mesa-amdgpu-omx-drivers_18.2.0-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./mesa-amdgpu-va-drivers_18.2.0-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./mesa-amdgpu-vdpau-drivers_18.2.0-725072_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libegl1-amdgpu-mesa_18.2.0-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libegl1-amdgpu-mesa-drivers_18.2.0-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libgbm-amdgpu-dev_18.2.0-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libgbm1-amdgpu_18.2.0-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libgbm1-amdgpu-pro_18.50-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libgbm1-amdgpu-pro-dev_18.50-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libgl1-amdgpu-mesa-dev_18.2.0-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libgl1-amdgpu-mesa-dri_18.2.0-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libgl1-amdgpu-mesa-glx_18.2.0-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libglapi-amdgpu-mesa_18.2.0-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libgles1-amdgpu-mesa_18.2.0-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libgles1-amdgpu-mesa-dev_18.2.0-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libgles2-amdgpu-mesa_18.2.0-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libgles2-amdgpu-mesa-dev_18.2.0-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libosmesa6-amdgpu_18.2.0-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libosmesa6-amdgpu-dev_18.2.0-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libxatracker-amdgpu-dev_18.2.0-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libxatracker2-amdgpu_18.2.0-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./mesa-amdgpu-common-dev_18.2.0-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./mesa-amdgpu-omx-drivers_18.2.0-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./mesa-amdgpu-va-drivers_18.2.0-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./mesa-amdgpu-vdpau-drivers_18.2.0-756341_i386.deb
 
 	move_libdir "${pkgdir}/lib" "usr/lib32"
 
@@ -422,9 +422,9 @@ package_lib32-opencl-amdgpu () {
 	pkgdesc="The AMDGPU Pro OpenCL implementation"
 	arch=('x86_64')
 	provides=('lib32-opencl-driver')
-	depends=('amdgpu-pro-core=18.50.725072-1' 'lib32-gcc-libs')
+	depends=('amdgpu-pro-core=18.50.756341-1' 'lib32-gcc-libs')
 
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./opencl-orca-amdgpu-pro-icd_18.50-725072_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./opencl-orca-amdgpu-pro-icd_18.50-756341_i386.deb
 
 	move_libdir "${pkgdir}/lib" "usr/lib32"
 
@@ -439,9 +439,9 @@ package_lib32-opencl-amdgpu () {
 package_lib32-opencl-orca-amdgpu () {
 	pkgdesc="non-free AMD OpenCL ICD Loaders 32 bit"
 	arch=('x86_64')
-	depends=('amdgpu-pro-core=18.50.725072-1' 'lib32-glibc')
+	depends=('amdgpu-pro-core=18.50.756341-1' 'lib32-glibc')
 
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libopencl1-amdgpu-pro_18.50-725072_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libopencl1-amdgpu-pro_18.50-756341_i386.deb
 
 	move_libdir "${pkgdir}/lib" "usr/lib32"
 
@@ -457,10 +457,10 @@ package_lib32-vulkan-amdgpu () {
 	pkgdesc="The AMDGPU Pro Vulkan driver 32bit"
 	arch=('x86_64')
 	provides=('lib32-vulkan-driver')
-	depends=('amdgpu-core=18.50.725072-1' 'amdgpu-pro-core=18.50.725072-1' 'lib32-gcc-libs' 'wsa-amdgpu=18.50.725072-1')
+	depends=('amdgpu-core=18.50.756341-1' 'amdgpu-pro-core=18.50.756341-1' 'lib32-gcc-libs' 'wsa-amdgpu=18.50.756341-1')
 
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./vulkan-amdgpu_18.50-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./vulkan-amdgpu-pro_18.50-725072_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./vulkan-amdgpu_18.50-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./vulkan-amdgpu-pro_18.50-756341_i386.deb
 
 	move_libdir "${pkgdir}/lib" "usr/lib32"
 
@@ -482,13 +482,13 @@ package_lib32-wayland-amdgpu () {
 	arch=('x86_64')
 	provides=('lib32-wayland')
 	conflicts=('lib32-wayland')
-	depends=('amdgpu-core=18.50.725072-1' 'lib32-expat>=2.0.1' 'lib32-libffi>=3.0.4' 'lib32-libxml2>=2.7.4' 'wayland-amdgpu=18.50.725072-1')
+	depends=('amdgpu-core=18.50.756341-1' 'lib32-expat>=2.0.1' 'lib32-libffi>=3.0.4' 'lib32-libxml2>=2.7.4' 'wayland-amdgpu=18.50.756341-1')
 
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libwayland-amdgpu-client0_1.15.0-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libwayland-amdgpu-cursor0_1.15.0-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libwayland-amdgpu-dev_1.15.0-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libwayland-amdgpu-egl1_1.15.0-725072_i386.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libwayland-amdgpu-server0_1.15.0-725072_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libwayland-amdgpu-client0_1.15.0-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libwayland-amdgpu-cursor0_1.15.0-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libwayland-amdgpu-dev_1.15.0-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libwayland-amdgpu-egl1_1.15.0-756341_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libwayland-amdgpu-server0_1.15.0-756341_i386.deb
 
 	move_libdir "${pkgdir}/lib" "usr/lib32"
 
@@ -517,9 +517,9 @@ package_lib32-wayland-amdgpu () {
 package_lib32-wsa-amdgpu () {
 	pkgdesc="Wayland support for AMD Vulkan driver 32 bit"
 	arch=('x86_64')
-	depends=('amdgpu-core=18.50.725072-1' 'lib32-wayland' 'wayland-amdgpu=18.50.725072-1')
+	depends=('amdgpu-core=18.50.756341-1' 'lib32-wayland' 'wayland-amdgpu=18.50.756341-1')
 
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./wsa-amdgpu_18.50-725072_i386.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./wsa-amdgpu_18.50-756341_i386.deb
 
 	move_libdir "${pkgdir}/lib" "usr/lib32"
 
@@ -550,14 +550,14 @@ package_libdrm-amdgpu () {
 	arch=('x86_64')
 	provides=('libdrm')
 	conflicts=('libdrm')
-	depends=('amdgpu-core=18.50.725072-1' 'bcunit' 'cunit')
+	depends=('amdgpu-core=18.50.756341-1' 'bcunit' 'cunit')
 
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libdrm-amdgpu-amdgpu1_2.4.95-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libdrm-amdgpu-common_1.0.0-725072_all.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libdrm-amdgpu-dev_2.4.95-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libdrm-amdgpu-radeon1_2.4.95-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libdrm-amdgpu-utils_2.4.95-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libdrm2-amdgpu_2.4.95-725072_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libdrm-amdgpu-amdgpu1_2.4.95-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libdrm-amdgpu-common_1.0.0-756341_all.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libdrm-amdgpu-dev_2.4.95-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libdrm-amdgpu-radeon1_2.4.95-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libdrm-amdgpu-utils_2.4.95-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libdrm2-amdgpu_2.4.95-756341_amd64.deb
 
 	move_libdir "${pkgdir}/lib"
 
@@ -582,16 +582,16 @@ package_llvm-amdgpu () {
 	arch=('x86_64')
 	provides=('llvm-libs' 'llvm')
 	conflicts=('llvm-libs' 'llvm')
-	depends=('amdgpu-core=18.50.725072-1' 'binfmt-support' 'libedit' 'libedit>=2.11-20080614' 'libffi>=3.0.9' 'ncurses' 'ncurses5-compat-libs' 'ncurses5-compat-libs>=6' 'python2' 'zlib>=1.2.0')
+	depends=('amdgpu-core=18.50.756341-1' 'binfmt-support' 'libedit' 'libedit>=2.11-20080614' 'libffi>=3.0.9' 'ncurses' 'ncurses5-compat-libs' 'ncurses5-compat-libs>=6' 'python2' 'zlib>=1.2.0')
 
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libllvm7.0-amdgpu_7.0-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./llvm-amdgpu_7.0-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./llvm-amdgpu-7.0_7.0-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./llvm-amdgpu-7.0-dev_7.0-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./llvm-amdgpu-7.0-doc_7.0-725072_all.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./llvm-amdgpu-7.0-runtime_7.0-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./llvm-amdgpu-dev_7.0-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./llvm-amdgpu-runtime_7.0-725072_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libllvm7.0-amdgpu_7.0-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./llvm-amdgpu_7.0-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./llvm-amdgpu-7.0_7.0-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./llvm-amdgpu-7.0-dev_7.0-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./llvm-amdgpu-7.0-doc_7.0-756341_all.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./llvm-amdgpu-7.0-runtime_7.0-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./llvm-amdgpu-dev_7.0-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./llvm-amdgpu-runtime_7.0-756341_amd64.deb
 
 	move_libdir "${pkgdir}/lib"
 
@@ -614,32 +614,32 @@ package_mesa-amdgpu () {
 	arch=('x86_64')
 	provides=('mesa-libgl' 'mesa-dri' 'opengl-driver' 'osmesa' 'mesa')
 	conflicts=('mesa' 'mesa-vdpau' 'mesa-dri' 'mesa-libgl')
-	depends=('amdgpu-core=18.50.725072-1' 'amdgpu-pro-core=18.50.725072-1' 'expat>=2.0.1' 'libdrm-amdgpu=18.50.725072-1' 'libomxil-bellagio' 'libselinux>=1.32' 'libva1' 'libvdpau' 'libx11' 'libx11>=1.4.99.1' 'libxcb' 'libxcb>=1.13' 'libxcb>=1.8' 'libxcb>=1.9.2' 'libxdamage' 'libxdamage>=1.1' 'libxext' 'libxfixes' 'libxshmfence' 'libxxf86vm' 'llvm-amdgpu=18.50.725072-1' 'systemd-libs' 'wayland-amdgpu=18.50.725072-1' 'xorgproto>=1.4.14' 'xorgproto>=2.6' 'zlib>=1.1.4')
+	depends=('amdgpu-core=18.50.756341-1' 'amdgpu-pro-core=18.50.756341-1' 'expat>=2.0.1' 'libdrm-amdgpu=18.50.756341-1' 'libomxil-bellagio' 'libselinux>=1.32' 'libva1' 'libvdpau' 'libx11' 'libx11>=1.4.99.1' 'libxcb' 'libxcb>=1.13' 'libxcb>=1.8' 'libxcb>=1.9.2' 'libxdamage' 'libxdamage>=1.1' 'libxext' 'libxfixes' 'libxshmfence' 'libxxf86vm' 'llvm-amdgpu=18.50.756341-1' 'systemd-libs' 'wayland-amdgpu=18.50.756341-1' 'xorgproto>=1.4.14' 'xorgproto>=2.6' 'zlib>=1.1.4')
 
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libegl1-amdgpu-mesa_18.2.0-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libegl1-amdgpu-mesa-dev_18.2.0-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libegl1-amdgpu-mesa-drivers_18.2.0-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libgbm-amdgpu-dev_18.2.0-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libgbm1-amdgpu_18.2.0-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libgbm1-amdgpu-pro_18.50-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libgbm1-amdgpu-pro-base_18.50-725072_all.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libgbm1-amdgpu-pro-dev_18.50-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libgl1-amdgpu-mesa-dev_18.2.0-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libgl1-amdgpu-mesa-dri_18.2.0-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libgl1-amdgpu-mesa-glx_18.2.0-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libglapi-amdgpu-mesa_18.2.0-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libgles1-amdgpu-mesa_18.2.0-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libgles1-amdgpu-mesa-dev_18.2.0-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libgles2-amdgpu-mesa_18.2.0-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libgles2-amdgpu-mesa-dev_18.2.0-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libosmesa6-amdgpu_18.2.0-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libosmesa6-amdgpu-dev_18.2.0-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libxatracker-amdgpu-dev_18.2.0-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libxatracker2-amdgpu_18.2.0-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./mesa-amdgpu-common-dev_18.2.0-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./mesa-amdgpu-omx-drivers_18.2.0-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./mesa-amdgpu-va-drivers_18.2.0-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./mesa-amdgpu-vdpau-drivers_18.2.0-725072_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libegl1-amdgpu-mesa_18.2.0-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libegl1-amdgpu-mesa-dev_18.2.0-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libegl1-amdgpu-mesa-drivers_18.2.0-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libgbm-amdgpu-dev_18.2.0-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libgbm1-amdgpu_18.2.0-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libgbm1-amdgpu-pro_18.50-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libgbm1-amdgpu-pro-base_18.50-756341_all.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libgbm1-amdgpu-pro-dev_18.50-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libgl1-amdgpu-mesa-dev_18.2.0-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libgl1-amdgpu-mesa-dri_18.2.0-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libgl1-amdgpu-mesa-glx_18.2.0-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libglapi-amdgpu-mesa_18.2.0-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libgles1-amdgpu-mesa_18.2.0-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libgles1-amdgpu-mesa-dev_18.2.0-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libgles2-amdgpu-mesa_18.2.0-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libgles2-amdgpu-mesa-dev_18.2.0-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libosmesa6-amdgpu_18.2.0-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libosmesa6-amdgpu-dev_18.2.0-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libxatracker-amdgpu-dev_18.2.0-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libxatracker2-amdgpu_18.2.0-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./mesa-amdgpu-common-dev_18.2.0-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./mesa-amdgpu-omx-drivers_18.2.0-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./mesa-amdgpu-va-drivers_18.2.0-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./mesa-amdgpu-vdpau-drivers_18.2.0-756341_amd64.deb
 
 	move_libdir "${pkgdir}/lib"
 
@@ -696,14 +696,14 @@ package_opencl-amdgpu () {
 	pkgdesc="The AMDGPU Pro OpenCL implementation"
 	arch=('x86_64')
 	provides=('opencl-driver')
-	depends=('amdgpu-core=18.50.725072-1' 'amdgpu-dkms=18.50.725072-1' 'amdgpu-pro-core=18.50.725072-1' 'libdrm-amdgpu=18.50.725072-1' 'numactl>=2.0.11' 'ocl-icd' 'opencl-orca-amdgpu=18.50.725072-1' 'pciutils>=3.5.2-1')
+	depends=('amdgpu-core=18.50.756341-1' 'amdgpu-dkms=18.50.756341-1' 'amdgpu-pro-core=18.50.756341-1' 'libdrm-amdgpu=18.50.756341-1' 'numactl>=2.0.11' 'ocl-icd' 'opencl-orca-amdgpu=18.50.756341-1' 'pciutils>=3.5.2-1')
 
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./clinfo-amdgpu-pro_18.50-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./opencl-amdgpu-pro_18.50-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./opencl-amdgpu-pro-dev_18.50-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./opencl-amdgpu-pro-icd_18.50-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./roct-amdgpu-pro_1.0.9-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./roct-amdgpu-pro-dev_1.0.9-725072_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./clinfo-amdgpu-pro_18.50-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./opencl-amdgpu-pro_18.50-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./opencl-amdgpu-pro-dev_18.50-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./opencl-amdgpu-pro-icd_18.50-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./roct-amdgpu-pro_1.0.9-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./roct-amdgpu-pro-dev_1.0.9-756341_amd64.deb
 
 	move_libdir "${pkgdir}/lib"
 
@@ -722,10 +722,10 @@ package_opencl-amdgpu () {
 package_opencl-orca-amdgpu () {
 	pkgdesc="non-free AMD OpenCL ICD Loaders"
 	arch=('x86_64')
-	depends=('amdgpu-pro-core=18.50.725072-1' 'gcc-libs')
+	depends=('amdgpu-pro-core=18.50.756341-1' 'gcc-libs')
 
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libopencl1-amdgpu-pro_18.50-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./opencl-orca-amdgpu-pro-icd_18.50-725072_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libopencl1-amdgpu-pro_18.50-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./opencl-orca-amdgpu-pro-icd_18.50-756341_amd64.deb
 
 	move_libdir "${pkgdir}/lib"
 
@@ -742,10 +742,10 @@ package_vulkan-amdgpu () {
 	pkgdesc="The AMDGPU Pro Vulkan driver"
 	arch=('x86_64')
 	provides=('vulkan-driver')
-	depends=('amdgpu-core=18.50.725072-1' 'amdgpu-pro-core=18.50.725072-1' 'gcc-libs' 'wsa-amdgpu=18.50.725072-1')
+	depends=('amdgpu-core=18.50.756341-1' 'amdgpu-pro-core=18.50.756341-1' 'gcc-libs' 'wsa-amdgpu=18.50.756341-1')
 
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./vulkan-amdgpu_18.50-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./vulkan-amdgpu-pro_18.50-725072_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./vulkan-amdgpu_18.50-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./vulkan-amdgpu-pro_18.50-756341_amd64.deb
 
 	move_libdir "${pkgdir}/lib"
 
@@ -762,14 +762,14 @@ package_wayland-amdgpu () {
 	arch=('x86_64')
 	provides=('wayland')
 	conflicts=('wayland')
-	depends=('amdgpu-core=18.50.725072-1' 'expat>=2.0.1' 'libffi>=3.0.4' 'libxml2>=2.7.4')
+	depends=('amdgpu-core=18.50.756341-1' 'expat>=2.0.1' 'libffi>=3.0.4' 'libxml2>=2.7.4')
 
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libwayland-amdgpu-client0_1.15.0-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libwayland-amdgpu-cursor0_1.15.0-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libwayland-amdgpu-dev_1.15.0-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libwayland-amdgpu-doc_1.15.0-725072_all.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libwayland-amdgpu-egl1_1.15.0-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./libwayland-amdgpu-server0_1.15.0-725072_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libwayland-amdgpu-client0_1.15.0-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libwayland-amdgpu-cursor0_1.15.0-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libwayland-amdgpu-dev_1.15.0-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libwayland-amdgpu-doc_1.15.0-756341_all.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libwayland-amdgpu-egl1_1.15.0-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./libwayland-amdgpu-server0_1.15.0-756341_amd64.deb
 
 	move_libdir "${pkgdir}/lib"
 
@@ -793,7 +793,7 @@ package_wayland-amdgpu () {
 package_wayland-protocols-amdgpu () {
 	pkgdesc="wayland compositor protocols"
 	arch=('any')
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./wayland-protocols-amdgpu_1.16-725072_all.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./wayland-protocols-amdgpu_1.16-756341_all.deb
 
 	move_libdir "${pkgdir}/lib"
 
@@ -803,9 +803,9 @@ package_wayland-protocols-amdgpu () {
 package_wsa-amdgpu () {
 	pkgdesc="Wayland support for AMD Vulkan driver"
 	arch=('x86_64')
-	depends=('amdgpu-core=18.50.725072-1' 'wayland-amdgpu' 'wayland-amdgpu=18.50.725072-1')
+	depends=('amdgpu-core=18.50.756341-1' 'wayland-amdgpu' 'wayland-amdgpu=18.50.756341-1')
 
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./wsa-amdgpu_18.50-725072_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./wsa-amdgpu_18.50-756341_amd64.deb
 
 	move_libdir "${pkgdir}/lib"
 
@@ -821,9 +821,9 @@ package_xf86-video-amdgpu-pro () {
 	provides=('xf86-video-amdgpu')
 	conflicts=('xf86-video-amdgpu' 'xorg-server>=1.20.0' 'X-ABI-VIDEODRV_VERSION<23' 'X-ABI-VIDEODRV_VERSION>=24')
 	groups=('xorg-drivers')
-	depends=('amdgpu-core=18.50.725072-1' 'libdrm-amdgpu=18.50.725072-1' 'systemd-libs>=183' 'xserver-xorg-amdgpu=18.50.725072-1')
+	depends=('amdgpu-core=18.50.756341-1' 'libdrm-amdgpu=18.50.756341-1' 'systemd-libs>=183' 'xserver-xorg-amdgpu=18.50.756341-1')
 
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./xserver-xorg-amdgpu-video-amdgpu_18.1.99-725072_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./xserver-xorg-amdgpu-video-amdgpu_18.1.99-756341_amd64.deb
 
 	move_libdir "${pkgdir}/lib"
 
@@ -836,10 +836,10 @@ package_xf86-video-amdgpu-pro () {
 package_xserver-xorg-amdgpu () {
 	pkgdesc="X.Org X server -- graphics acceleration module based on OpenGL. Glamor is a library for accelerating 2D graphics using GL functions. This package contains the X.Org module."
 	arch=('x86_64')
-	depends=('amdgpu-core=18.50.725072-1' 'libdrm-amdgpu=18.50.725072-1' 'libepoxy>=1.0')
+	depends=('amdgpu-core=18.50.756341-1' 'libdrm-amdgpu=18.50.756341-1' 'libepoxy>=1.0')
 
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./glamor-amdgpu_1.19.0-725072_amd64.deb
-	extract_deb "${srcdir}"/amdgpu-pro-18.50-725072-ubuntu-18.04/./glamor-amdgpu-dev_1.19.0-725072_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./glamor-amdgpu_1.19.0-756341_amd64.deb
+	extract_deb "${srcdir}"/amdgpu-pro-18.50-756341-ubuntu-18.04/./glamor-amdgpu-dev_1.19.0-756341_amd64.deb
 
 	move_libdir "${pkgdir}/lib"
 

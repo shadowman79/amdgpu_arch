@@ -8,7 +8,7 @@ import hashlib
 import glob
 
 pkgver_base = "18.50"
-pkgver_build = "725072"
+pkgver_build = "756341"
 pkgrel = 1
 debug_pkgext = False
 
@@ -17,7 +17,7 @@ pkgver = "{0}.{1}".format(pkgver_base, pkgver_build)
 url_ref="https://www.amd.com/ru/support/kb/release-notes/rn-rad-lin-18-50-unified"
 dlagents="https::/usr/bin/wget --referer {0} -N %u".format(url_ref)
 
-            # https://drivers.amd.com/drivers/linux/amdgpu-pro-18.50-725072-ubuntu-18.04.tar.xz
+            # https://drivers.amd.com/drivers/linux/amdgpu-pro-18.50-756341-ubuntu-18.04.tar.xz
 source_url = "https://drivers.amd.com/drivers/linux/amdgpu-pro-{0}-{1}-ubuntu-18.04.tar.xz".format(pkgver_base, pkgver_build)
 source_file = "amdgpu-pro-{0}-{1}-ubuntu-18.04.tar.xz".format(pkgver_base, pkgver_build)
 
